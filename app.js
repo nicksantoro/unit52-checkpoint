@@ -4,9 +4,14 @@ const bodyParser = require('body-parser');
 
 const port = process.env.PORT || 3000
 
+const snacksRoute = require("./src/routes/snacks.route")
 
-
-
+// GET /snacks
+app.use('/snacks', snacksRoute);
+// GET /snacks/:id
+// POST /snacks
+// PUT /snacks/:id
+// DELETE /snacks/:id
 
 
 
