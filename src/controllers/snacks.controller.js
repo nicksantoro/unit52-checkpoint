@@ -1,3 +1,6 @@
+// controller is the water/server
+// controller goes to chef - we want cheeseburger
+
 const model = require('../models/snacks.model');
 
 const fetchSnacks = (req, res, next) => {
@@ -9,8 +12,25 @@ const fetchSnacks = (req, res, next) => {
 const findSnack = (req, res, next) => {
   let { id } = req.params
   let fetcher = model.findSnack(id)
-  res.send(fetcher)
+//   console.log(fetcher)
+  if(fetcher.error) {
+      console.log("fetcher is error")
+     next(fetcher)
+     return
+  }
+  return res.status(200).json(fetcher)
   
+}
+
+const createSnack = (req, res, next) => {
+    let newSnack = req.body
+    let result = model.createSnack(newSnack)
+    if(result.error) {
+        console.log("creation in error")
+       next(result)
+       return
+    }
+    return res.status(200).json(result)
 }
 
 
@@ -22,5 +42,6 @@ const findSnack = (req, res, next) => {
 
 module.exports = {
     fetchSnacks,
-    findSnack
+    findSnack,
+    createSnack
 }
