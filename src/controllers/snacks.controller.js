@@ -6,11 +6,21 @@ const fetchSnacks = (req, res, next) => {
     
 }
 
+const findSnack = (req, res, next) => {
+  let { id } = req.params
+  let fetcher = model.findSnack(id)
+  res.send(fetcher)
+  
+}
+
+
+
 // findSnack
 // createSnack
 // editSnack
 // deleteSnack
 
 module.exports = {
-    fetchSnacks
+    fetchSnacks,
+    findSnack
 }
