@@ -12,36 +12,36 @@ const fetchSnacks = (req, res, next) => {
 const findSnack = (req, res, next) => {
   let { id } = req.params
   let fetcher = model.findSnack(id)
-//   console.log(fetcher)
   if(fetcher.error) {
-      console.log("fetcher is error")
      next(fetcher)
      return
   }
-  return res.status(200).json(fetcher)
-  
+  return res.status(200).json(fetcher) 
 }
 
 const createSnack = (req, res, next) => {
-    let newSnack = req.body
+    let {body} = req
     let result = model.createSnack(newSnack)
-    if(result.error) {
-        console.log("creation in error")
-       next(result)
-       return
-    }
     return res.status(200).json(result)
 }
 
+const updateSnack = (req, res, next) => {
+    let {body} = req
+    let {id} = req.params
+    let result = model.updateSnack(body, id)
+    return res.status(200).json(result)
+}
 
-
-// findSnack
-// createSnack
-// editSnack
-// deleteSnack
+const deleteSnack = (req, res, next) => {
+    let id = req.params.id
+    let result = model.deleteSnack(id)
+    return res.status(200).json(result)
+}
 
 module.exports = {
     fetchSnacks,
     findSnack,
-    createSnack
+    createSnack,
+    updateSnack,
+    deleteSnack
 }

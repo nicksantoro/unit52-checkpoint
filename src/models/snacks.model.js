@@ -1,4 +1,4 @@
-// model is the kitchen
+// model is like the kitchen
 // model says we dont have cheesburger and sends error
 // or it has cheeseburger, gets ingredients from query
 // most important - smartest
@@ -9,21 +9,14 @@ const snacks = [
     {id: 3, name: "fruit rollup"}
 ]
 
-
-
 const fetchSnacks = () => {
     return snacks;
 }
 
 const findSnack = (id) => {
     id = Number(id);
-    // console.log(typeof id)
     for(let i = 0; i < snacks.length; i++) {
-        // console.log(snacks[i].id, "in the loop")
-        // console.log(snacks)
-
         if(snacks[i].id == id) {
-            // console.log(snacks[i].id, "in the if statement")
             return snacks[i];
         } 
     }
@@ -31,18 +24,33 @@ const findSnack = (id) => {
 }
 
 const createSnack = (newSnack) => {
+    let exists = snacks.find(snack => {
+        return snack.name === newSnack.name
+    });
+    if(exists) return {error: "snack already exists", status: 400};
+    newSnack.id = snacks.length + 1;
     snacks.push(newSnack)
-    const snack = snacks.find( element => element.name == newSnack.name)
-    if ( snack.name == newSnack.name) return snack;  
-    return {error: "snack not found", status:404};
+    return newSnack;
 }
 
+const updateSnack = (newInfo, snackId) => {
+    snacks.forEach(function(element) {
+        if(element.id == snackId){
+            element.name = newInfo.name;
+        }
+    })
+    return snacks;
+}
 
-
-
+const deleteSnack = (snackId) => {
+    snacks.splice(snacks.findIndex(item => item.id == snackId), 1);
+    return snacks;
+}
 
 module.exports = {
     fetchSnacks,
     findSnack,
-    createSnack
+    createSnack,
+    updateSnack,
+    deleteSnack 
 }

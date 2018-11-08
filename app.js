@@ -9,21 +9,12 @@ app.use(morgan("dev"))
 
 const snacksRoute = require("./src/routes/snacks.route")
 
-
-// GET /snacks
 app.use('/snacks', snacksRoute);
 
 app.use((err, req, res, next) => {
     console.log(err)
     res.status(err.status).json(err)
 })
-
-// GET /snacks/:id
-// POST /snacks
-// PUT /snacks/:id
-// DELETE /snacks/:id
-
-
 
 app.listen(port, () => {
     console.log(`the server is working on ${port}`)
